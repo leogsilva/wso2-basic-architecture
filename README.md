@@ -25,3 +25,18 @@ Simple wso2 and istio architecture on AWS Cloud
 ```
 ./scripts/5_rootca.sh
 ```
+
+## Istio 1.5.7 installation
+```
+./scripts/6_istio.sh
+```
+
+## Updates coredns configuration to enable multicluster architecture
+```
+./scripts/7_coredns.sh
+```
+
+## Installs certmanager on edge cluster
+```
+./scripts/8_certmanager_edge.sh
+``` 
