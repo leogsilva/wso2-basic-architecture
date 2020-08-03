@@ -18,5 +18,5 @@ Simple wso2 and istio architecture on AWS Cloud
 
 ## Setup Kubeconfig and Kubectx configuration
 ```
-./scripts/4_kubeconifg.sh
+./scripts/4_kubeconfig.sh
 ```
