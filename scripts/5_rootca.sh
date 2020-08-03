@@ -9,5 +9,6 @@ for i in $(kubectx); do
     kubectl create ns istio-system; 
     kubectl create secret generic cacerts -n istio-system --from-file=ca-cert.pem --from-file=ca-key.pem --from-file=root-cert.pem --from-file=cert-chain.pem
 done
+rm -fr $PROJECT_HOME/root*
 rm -fr $PROJECT_HOME/scripts/Makefile.rootca
 popd
