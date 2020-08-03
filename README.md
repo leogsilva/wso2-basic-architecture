@@ -20,3 +20,8 @@ Simple wso2 and istio architecture on AWS Cloud
 ```
 ./scripts/4_kubeconfig.sh
 ```
+
+## Setup the rootca for both clusters
+```
+./scripts/5_rootca.sh
+```
