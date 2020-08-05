@@ -1,0 +1,18 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  annotations: {}
+  labels:
+    app: "gateway_k8sguru_info"
+  name: "httpservice"
+  namespace: gateway
+spec:
+  ports:
+  - name: "gateway-httpservice"
+    port: 9090
+    protocol: "TCP"
+    targetPort: 9090
+  selector:
+    app: "gateway_k8sguru_info"
+  type: "ClusterIP"

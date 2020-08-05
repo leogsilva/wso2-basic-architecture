@@ -1,0 +1,55 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: micro
+  labels:
+    istio-injection: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: micro
+  creationTimestamp: null
+  labels:
+    app: product
+  name: product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: product
+    spec:
+      containers:
+      - image: pubudu/products:1.0.0
+        name: products
+        ports:
+        - containerPort: 9090 
+          protocol: TCP
+          hostPort: 80
+        resources: {}
+status: {}
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  annotations: {}
+  labels:
+    app: "product"
+  name: "products"
+  namespace: micro
+spec:
+  ports:
+  - name: "products-httpservice"
+    port: 9090
+    protocol: "TCP"
+    targetPort: 9090
+  selector:
+    app: "product"
+  type: "ClusterIP"

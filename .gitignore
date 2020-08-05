@@ -1,4 +1,7 @@
 istio-1.5.7/*
 cluster1/*
 root*
+**/.DS_Store
+wso2am-micro-gw-toolkit-*/*
 
+edge/gateway.k8sguru.info/gateway_k8sguru_info/target/*

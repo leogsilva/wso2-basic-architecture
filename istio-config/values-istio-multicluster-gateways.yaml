@@ -62,8 +62,8 @@ spec:
 
     gateways:
       istio-ingressgateway:
-        serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"      
+        # serviceAnnotations:
+        #   service.beta.kubernetes.io/aws-load-balancer-type: "nlb"      
         autoscaleEnabled: false
       istio-egressgateway:
         env:

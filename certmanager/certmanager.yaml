@@ -760,6 +760,8 @@ spec:
         prometheus.io/port: '9402'
     spec:
       serviceAccountName: cert-manager
+      securityContext:
+        fsGroup: 1001
       containers:
         - name: cert-manager
           image: "quay.io/jetstack/cert-manager-controller:v0.16.0"
@@ -810,8 +812,6 @@ spec:
         helm.sh/chart: cert-manager-v0.16.0
     spec:
       serviceAccountName: cert-manager-webhook
-      securityContext:
-        fsGroup: 1001
       containers:
         - name: cert-manager
           image: "quay.io/jetstack/cert-manager-webhook:v0.16.0"

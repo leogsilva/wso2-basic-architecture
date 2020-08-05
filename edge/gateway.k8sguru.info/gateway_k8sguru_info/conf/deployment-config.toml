@@ -1,0 +1,49 @@
+[kubernetes]
+  [kubernetes.kubernetesDeployment]
+    enable = true
+    name = 'gateway'
+    namespace = 'gateway'
+    tag = 'v1'
+    #labels = ''
+    replicas = '1'
+    #enableLiveness = ''
+    #initialDelaySeconds = ''
+    #periodSeconds = ''
+    #livenessPort = ''
+    imagePullPolicy = 'Always'
+    #imagePullSecrets = ['secret1']
+    image = 'docker.io/leogsilva/gateway'
+    #env = ''
+    buildImage = true
+    #cmd = 'CMD gateway  --b7a.config.file=conf/micro-gw.conf --b7a.log.level=DEBUG'
+    #copyFiles = ''
+    #dockerHost = ''
+    #dockerCertPath = ''
+    #push = 'false'
+    registry = 'docker.io/leogsilva'
+    #username = ''
+    #password = ''
+    baseImage = 'wso2/wso2micro-gw:3.1.0'
+    [kubernetes.kubernetesDeployment.livenessProbe]
+        enable = true
+        initialDelaySeconds = '20'
+        periodSeconds = '20'
+    [kubernetes.kubernetesDeployment.readinessProbe]
+        enable = true
+        initialDelaySeconds = '30'
+        periodSeconds = '30'
+  [kubernetes.kubernetesServiceHttps]
+      enable = false
+      name = 'httpsService'
+      #labels = '{"": ""}'
+      serviceType = 'NodePort'
+      #port = ''
+  [kubernetes.kubernetesServiceHttp]
+      enable = true
+      name = 'httpService'
+      #labels = '{"": ""}'
+      serviceType = 'ClusterIP'
+      #port = ''
+  [kubernetes.kubernetesConfigMap]
+    enable = true
+    ballerinaConf = '/Users/leonardosilva/projetos/grupomult/bbce/wso2-architecture/wso2am-micro-gw-toolkit-macos-3.1.0/resources/conf/micro-gw.conf'

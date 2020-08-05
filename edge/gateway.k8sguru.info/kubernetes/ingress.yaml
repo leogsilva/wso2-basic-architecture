@@ -1,0 +1,63 @@
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     kubernetes.io/ingress.class: istio
+#   name: gateway
+#   namespace: gateway
+# spec:
+#   rules:
+#   - host: gw1.gateway.k8sguru.info
+#     http:
+#       paths:
+#       - path: /storemep/v1.0.0/products  
+#         backend:
+#           serviceName: httpservice
+#           servicePort: 9090  
+#   # This section is only required if TLS is to be enabled for the Ingress
+#   tls:
+#   - hosts:
+#     - gw1.gateway.k8sguru.info
+#     secretName: gateway-production-secret
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: apim-gateway
+  namespace: gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - gw1.gateway.k8sguru.info
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: gateway-production-secret # This should match the Certifcate secretName
+    hosts:
+    - gw1.gateway.k8sguru.info # This should match a DNS name in the Certificate    
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: apim-gw1
+  namespace: gateway
+spec:
+  hosts:
+  - "gw1.gateway.k8sguru.info"
+  gateways:
+  - apim-gateway
+  http:
+  - route:
+    - destination:
+        host: httpservice
+        port:
+          number: 9090

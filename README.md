@@ -39,4 +39,19 @@ Simple wso2 and istio architecture on AWS Cloud
 ## Installs certmanager on edge cluster
 ```
 ./scripts/8_certmanager_edge.sh
+```
+
+## Installs the WSO2 api manager on edge cluster
+```
+./scripts/9_apim_edge.sh
 ``` 
+
+## Downloads the api micro gateway toolkit
+```
+./scripts/10_downloadmg.sh
+```
+
+## Build and install micro gateway on edge cluster
+```
+./scripts/11_buildgateway_edge.sh
+```
