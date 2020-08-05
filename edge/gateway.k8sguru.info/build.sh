@@ -65,7 +65,7 @@ docker push docker.io/leogsilva/gateway:latest
 kubectl create ns ${GATEWAY_NS} || true 
 kubectl label namespace ${GATEWAY_NS} istio-injection=enabled 
 kubectl apply -n ${GATEWAY_NS} -f "${GATEWAY_NAME}/target/gen/target/kubernetes/${GATEWAY_NAME}/${GATEWAY_NAME}.yaml"
-kubectl apply -n ${GATEWAY_NS} -f kubernetes/gateway-certificate-production.yaml
+kubectl apply -f kubernetes/gateway-certificate-production.yaml
 kubectl apply -n ${GATEWAY_NS} -f kubernetes/service.yaml
 kubectl apply -n ${GATEWAY_NS} -f kubernetes/ingress.yaml
 kubectl rollout restart deploy gateway -n ${GATEWAY_NS}

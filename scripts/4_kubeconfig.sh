@@ -25,5 +25,7 @@ export KUBECONFIG=$HOME/.kube/eksctl/clusters/basic-cluster-A:$HOME/.kube/eksctl
 
 kubectx edge=$AWS_USER@basic-cluster-A.us-east-1.eksctl.io
 kubectx app=$AWS_USER@basic-cluster-B.us-east-1.eksctl.io
+kubectx -d $AWS_USER@basic-cluster-B.us-east-1.eksctl.io
+kubectx -d $AWS_USER@basic-cluster-A.us-east-1.eksctl.io
 kubectx
 

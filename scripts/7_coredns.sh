@@ -1,10 +1,10 @@
 #!/bin/bash
 #https://istio.io/latest/docs/setup/install/multicluster/gateways/
 
-for i in $(kubectx); do
-kubectx $i
+TYPE=$1
 
-kubectl apply -f - <<EOF
+function updateCM() {
+  kubectl apply -f - <<EOF
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -35,4 +35,25 @@ data:
     }
 EOF
 kubectl rollout restart deploy coredns -n kube-system
-done
+}
+
+function clusterEdge() {
+  kubectx edge
+  updateCM
+}
+
+function clusterApp() {
+  kubectx app
+  updateCM
+}
+
+if [[ "$TYPE" = "edge" ]]; then
+    echo "Updating edge cluster"
+    clusterEdge
+elif [[ "$TYPE" = "app" ]]; then 
+    echo "Updating app cluster"
+    clusterApp
+else 
+    echo "Updating ALL clusters"
+    clusterEdge && clusterApp
+fi

@@ -1,0 +1,69 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  addonComponents:
+    istiocoredns:
+      enabled: true
+
+  meshConfig:
+    accessLogEncoding: 1
+    accessLogFile: "/dev/stdout"   
+    accessLogFormat: |
+       {
+         "auth_jwt": "%DYNAMIC_METADATA(envoy.filters.http.jwt_authn)%",
+         "log_type": "access_log",
+         "start_time": "%START_TIME%",
+         "route_name": "%ROUTE_NAME%",
+         "method": "%REQ(:METHOD)%",
+         "path": "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%",
+         "protocol": "%PROTOCOL%",
+         "response_code": "%RESPONSE_CODE%",
+         "response_flags": "%RESPONSE_FLAGS%",
+         "bytes_received": "%BYTES_RECEIVED%",
+         "bytes_sent": "%BYTES_SENT%",
+         "duration": "%DURATION%",
+         "upstream_service_time": "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%",
+         "x_forwarded_for": "%REQ(X-FORWARDED-FOR)%",
+         "user_agent": "%REQ(USER-AGENT)%",
+         "request_id": "%REQ(X-REQUEST-ID)%",
+         "authority": "%REQ(:AUTHORITY)%",
+         "upstream_host": "%UPSTREAM_HOST%",
+         "upstream_cluster": "%UPSTREAM_CLUSTER%",
+         "upstream_local_address": "%UPSTREAM_LOCAL_ADDRESS%",
+         "downstream_local_address": "%DOWNSTREAM_LOCAL_ADDRESS%",
+         "downstream_remote_address": "%DOWNSTREAM_REMOTE_ADDRESS%",
+         "requested_server_name": "%REQUESTED_SERVER_NAME%",
+         "istio_policy_status": "%DYNAMIC_METADATA(istio.mixer:status)%",
+         "upstream_transport_failure_reason": "%UPSTREAM_TRANSPORT_FAILURE_REASON%"
+       }
+    
+    
+  components:
+    egressGateways:
+      - name: istio-egressgateway
+        enabled: true
+
+  values:
+    global:
+      # Provides dns resolution for global services
+      podDNSSearchNamespaces:
+        - global
+        - "{{ valueOrDefault .DeploymentMeta.Namespace \"default\" }}.global"
+
+      multiCluster:
+        enabled: true
+
+      controlPlaneSecurityEnabled: true
+
+    # Multicluster with gateways requires a root CA
+    # Cluster local CAs are bootstrapped with the root CA.
+    security:
+      selfSigned: false
+
+    gateways:
+      istio-ingressgateway:
+        autoscaleEnabled: false
+      istio-egressgateway:
+        env:
+          # Needed to route traffic via egress gateway if desired.
+          ISTIO_META_REQUESTED_NETWORK_VIEW: "external"
