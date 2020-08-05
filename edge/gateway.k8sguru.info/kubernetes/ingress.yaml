@@ -61,3 +61,13 @@ spec:
         host: httpservice
         port:
           number: 9090
+    corsPolicy:
+      allowOrigin:
+      - "*"
+      allowMethods:
+      - POST
+      - GET
+      allowCredentials: true
+      allowHeaders:
+      - Authorization
+      maxAge: "24h"          

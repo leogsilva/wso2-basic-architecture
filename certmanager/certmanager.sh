@@ -6,8 +6,8 @@
 NS="cert-manager"
 
 kubectl apply --validate=false -f cert-manager.crds.yaml
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
+# helm repo add jetstack https://charts.jetstack.io
+# helm repo update
 # We should use the istio-ingressgateway as ingress controller
 # helm install nginx-ingress stable/nginx-ingress --set rbac.create=true --set controller.publishService.enabled=true
 # kubectl create ns ${NS}
@@ -17,5 +17,6 @@ helm repo update
 #   --version v0.16.0 \
 #   -f values.yaml > certmanager.yaml
 
+kubectl create ns cert-manager || true
 kubectl apply -f certmanager.yaml 
 kubectl apply -f issuer-letsencrypt-production.yaml 

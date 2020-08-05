@@ -61,7 +61,7 @@ wso2:
       # API Manager Gateway profile specific configurations
       gateway:
         # Hostname for Gateway profile
-        hostname: "gateway.k8sguru.info"
+        hostname: "gw1.gateway.k8sguru.info"
 
       # Container image configurations
       # If a custom image must be used, uncomment 'dockerRegistry' and provide its value

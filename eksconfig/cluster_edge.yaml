@@ -7,7 +7,14 @@ metadata:
 
 nodeGroups:
   - name: ng-2
-    instanceType: t3.large
+    instanceType: mixed
     desiredCapacity: 3 
     ssh:
       allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
+    instancesDistribution:
+      maxPrice: 0.04
+      instanceTypes: ["m5.large", "t3.large"] # At least one instance type should be specified
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      spotInstancePools: 2
+availabilityZones: ['us-east-1a', 'us-east-1b', 'us-east-1c', 'us-east-1d']      
