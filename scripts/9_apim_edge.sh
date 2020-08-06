@@ -9,6 +9,8 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm install nginx ingress-nginx/ingress-nginx
 kubectl create ns ${APIM_NS}
+# wait until nginx webhook becomes available
+sleep 30 
 helm install apim wso2/am-pattern-1 --version 3.1.0-3 -f ${PROJECT_HOME}/apim-config/values.yaml --namespace ${APIM_NS}
 
 

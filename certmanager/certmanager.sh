@@ -19,4 +19,6 @@ kubectl apply --validate=false -f cert-manager.crds.yaml
 
 kubectl create ns cert-manager || true
 kubectl apply -f certmanager.yaml 
+# wait some seconds until the webhook becomes available
+sleep 30
 kubectl apply -f issuer-letsencrypt-production.yaml 
